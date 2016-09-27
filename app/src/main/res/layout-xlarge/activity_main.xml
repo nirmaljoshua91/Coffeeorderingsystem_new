@@ -11,19 +11,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TOPPINGs"
-        android:textAllCaps="true"
-        android:textSize="16sp"
-        android:paddingBottom="16dp"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Icecream"
-        android:padding="16dp"/>
-
-    <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Quantity"
@@ -61,12 +48,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order Summary"
+        android:text="Price"
         android:textAllCaps="true"
         android:textSize="16sp"
         android:paddingTop="16dp"/>
     <TextView
-        android:id="@+id/order_text_view"
+        android:id="@+id/price_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"

@@ -58,11 +58,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void submitOrder(View view) {
-
+        int quantity=i;
         String message="Thank you!";
         display(i);
-        displayPrice(i * 10,message);
+        int price =calculatePrice(i,10);
+        displayPrice(price,message);
+
         //displayMessage(message);
+    }
+    /**
+     * Calculates the price of the order.
+     *
+     * @param quantity is the number of cups of coffee ordered
+     */
+    public int calculatePrice(int quantity,int pricePercup) {
+        int price = quantity * pricePercup;
+        return price;
     }
 
     /**
@@ -74,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayPrice(int number,String msg) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText("Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(number)+"\n"+ msg);
+        TextView orderTextView = (TextView) findViewById(R.id.order_text_view);
+        orderTextView.setText("Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(number)+"\n"+ msg);
     }
 
     private void displayMessage(String msg){
-        TextView message=(TextView)findViewById(R.id.price_text_view);
+        TextView message=(TextView)findViewById(R.id.order_text_view);
         message.setText(msg);
     }
 
