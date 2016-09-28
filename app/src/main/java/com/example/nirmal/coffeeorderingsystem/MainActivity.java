@@ -13,11 +13,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.server.converter.StringToIntConverter;
 
 import java.util.Locale;
 
@@ -61,10 +64,13 @@ public class MainActivity extends AppCompatActivity {
         int quantity=i;
         String message="Thank you!";
         display(i);
+        String name =getName();
         int price =calculatePrice(i,10);
-        displayPrice(price,message);
+        boolean checkboxstatus1 = hasChecked();
+        boolean checkboxstatus2 = hasChecked2();
+        displaySummary(price,quantity,checkboxstatus1,checkboxstatus2,name);
 
-        //displayMessage(message);
+
     }
     /**
      * Calculates the price of the order.
@@ -76,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         return price;
     }
 
+    private String getName(){
+        EditText name = (EditText) findViewById(R.id.NameEdit);
+        return String.valueOf(name.getText());
+    }
+
     /**
      * This method displays the given quantity value on the screen.
      */
@@ -84,14 +95,26 @@ public class MainActivity extends AppCompatActivity {
         quantityTextView.setText("" + number);
     }
 
-    private void displayPrice(int number,String msg) {
-        TextView orderTextView = (TextView) findViewById(R.id.order_text_view);
-        orderTextView.setText("Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(number)+"\n"+ msg);
+    private void displaySummary(int price,int quantity,boolean checkBoxStatus,boolean checkBoxStatus2,String name){
+        TextView message=(TextView)findViewById(R.id.order_text_view);
+        String content ="Name:"+name+"\n";
+        content +="Add Whipped cream?"+checkBoxStatus+"\n";
+        content +="Add Choclate?"+checkBoxStatus2+"\n";
+        content +="Quantity:"+quantity+"\n";
+        content += "Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(price)+"\n"+ "Thank You!";
+        //message.setText("Name: Lyla the Labyrinth"+"\n"+"Add Whipped cream?"+checkBoxStatus+"\n"+"Add Choclate?"+checkBoxStatus2+"\n"+"Quantity:"+quantity+"\n"+"Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(price)+"\n"+ "Thank You!");
+        message.setText(content);
     }
 
-    private void displayMessage(String msg){
-        TextView message=(TextView)findViewById(R.id.order_text_view);
-        message.setText(msg);
+    private boolean hasChecked(){
+        CheckBox status = (CheckBox) findViewById(R.id.checkbox1);
+        boolean checkstatus =status.isChecked();
+        return checkstatus;
+    }
+    private boolean hasChecked2(){
+        CheckBox status = (CheckBox) findViewById(R.id.checkbox2);
+        boolean checkstatus =status.isChecked();
+        return checkstatus;
     }
 
     @Override
