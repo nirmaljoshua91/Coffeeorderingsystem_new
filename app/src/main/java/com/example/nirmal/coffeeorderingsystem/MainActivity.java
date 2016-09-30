@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         boolean checkboxstatus1 = hasChecked();
         boolean checkboxstatus2 = hasChecked2();
         displaySummary(price,quantity,checkboxstatus1,checkboxstatus2,name);
+        Button mailButton = (Button) findViewById(R.id.mailButtonID);
+        mailButton.setVisibility(View.VISIBLE);
 
 
 

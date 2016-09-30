@@ -108,9 +108,11 @@
             android:text="Get ORDER Summary"
             android:textSize="16sp" />
         <Button
+            android:id="@+id/mailButtonID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="sendEmail"
+            android:onClick="sendEmailButton"
+            android:visibility="invisible"
             android:paddingTop="16dp"
             android:text="Order Via Email"
             android:textSize="16sp" />
