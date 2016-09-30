@@ -7,6 +7,7 @@ package com.example.nirmal.coffeeorderingsystem;
  * package com.example.android.justjava;
  */
 
+import android.content.Intent;
 import android.icu.text.NumberFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -48,14 +50,21 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     int i = 0;
+    String displaySummaryGlobal;
 
     public void increButton(View view){
+        if(i<100)
         i++;
+        else
+            Toast.makeText(this,"Sorry! the quantitiy should not be above 100",Toast.LENGTH_SHORT).show();
         display(i);
     }
     public void decreButton(View view){
        if(i>0) {
            i--;
+       }
+        else{
+           Toast.makeText(this,"Sorry! the quantitiy should be alteast 1 number",Toast.LENGTH_SHORT).show();
        }
         display(i);
     }
@@ -63,15 +72,30 @@ public class MainActivity extends AppCompatActivity {
     public void submitOrder(View view) {
         int quantity=i;
         String message="Thank you!";
+        int pricePerItem=10;
         display(i);
         String name =getName();
-        int price =calculatePrice(i,10);
+        if(hasChecked()){
+            pricePerItem=pricePerItem+5;
+        }
+        else if(hasChecked2()){
+            pricePerItem=pricePerItem+10;
+        }
+
+        int price =calculatePrice(i,pricePerItem);
         boolean checkboxstatus1 = hasChecked();
         boolean checkboxstatus2 = hasChecked2();
         displaySummary(price,quantity,checkboxstatus1,checkboxstatus2,name);
 
 
+
     }
+    public void sendEmailButton(View view){
+        sendEmail(displaySummaryGlobal);
+    }
+
+
+
     /**
      * Calculates the price of the order.
      *
@@ -95,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         quantityTextView.setText("" + number);
     }
 
-    private void displaySummary(int price,int quantity,boolean checkBoxStatus,boolean checkBoxStatus2,String name){
+    public String displaySummary(int price,int quantity,boolean checkBoxStatus,boolean checkBoxStatus2,String name){
         TextView message=(TextView)findViewById(R.id.order_text_view);
         String content ="Name:"+name+"\n";
         content +="Add Whipped cream?"+checkBoxStatus+"\n";
@@ -104,8 +128,20 @@ public class MainActivity extends AppCompatActivity {
         content += "Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(price)+"\n"+ "Thank You!";
         //message.setText("Name: Lyla the Labyrinth"+"\n"+"Add Whipped cream?"+checkBoxStatus+"\n"+"Add Choclate?"+checkBoxStatus2+"\n"+"Quantity:"+quantity+"\n"+"Total Amount to be paid :"+NumberFormat.getCurrencyInstance(new Locale("en","IN")).format(price)+"\n"+ "Thank You!");
         message.setText(content);
+        displaySummaryGlobal=content;
+        return content;
     }
 
+    private void sendEmail(String bodyText){
+        Intent intent=new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_TEXT,bodyText);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(this,"Email not sent",Toast.LENGTH_SHORT).show();
+    }
     private boolean hasChecked(){
         CheckBox status = (CheckBox) findViewById(R.id.checkbox1);
         boolean checkstatus =status.isChecked();

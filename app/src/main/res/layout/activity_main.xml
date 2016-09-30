@@ -105,7 +105,14 @@
             android:layout_height="wrap_content"
             android:onClick="submitOrder"
             android:paddingTop="16dp"
-            android:text="ORDER"
+            android:text="Get ORDER Summary"
+            android:textSize="16sp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sendEmail"
+            android:paddingTop="16dp"
+            android:text="Order Via Email"
             android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>
